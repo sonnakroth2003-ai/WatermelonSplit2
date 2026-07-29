@@ -1,18 +1,17 @@
-// Firebase Project Configuration
-// Thay thế thông số firebaseConfig bên dưới bằng dự án Firebase của bạn
-const firebaseConfig = {
-apiKey: "YOUR_API_KEY",
-authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-projectId: "YOUR_PROJECT_ID",
-storageBucket: "YOUR_PROJECT_ID.appspot.com",
-messagingSenderId: "YOUR_SENDER_ID",
-appId: "YOUR_APP_ID"
+// js/config.js
+
+export const firebaseConfig = {
+    apiKey: "AIzaSy...", // API Key của bạn
+    authDomain: "your-app.firebaseapp.com",
+    databaseURL: "https://your-app-default-rtdb.firebaseio.com",
+    projectId: "your-app",
+    storageBucket: "your-app.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef"
 };
 
-// Game Configuration Constants
-const GAME_CONFIG = {
-DEFAULT_TIME_LIMIT: 120, // 120 seconds
-WATERMELON_RADIUS: 1.8,
-LEADERBOARD_LIMIT: 10
+// Cấu hình các thông số Game (nếu có)
+export const GAME_CONFIG = {
+    MAX_TIME: 120, // Thời gian 120 giây
+    TARGET_RATIO: 0.5 // Mục tiêu 50%
 };
