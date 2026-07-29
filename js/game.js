@@ -1,7 +1,15 @@
 import { GAME_CONFIG } from './config.js';
 import { savePlayerScoreToFirebase, listenToLeaderboardRealtime } from './leaderboard.js';
-import { playCutSound, playChimeSound, startAmbientMusic, initAudio, ambientSource, audioCtx } from './audio.js';
-import { fireConfetti, toggleModal } from './utils.js';
+import { 
+    playCutSound, 
+    playChimeSound, 
+    startAmbientMusic, 
+    initAudio, 
+    ambientSource, 
+    audioCtx, 
+    fireConfetti, 
+    toggleModal 
+} from './utils.js';
 
 /*
 Main Game State and 3D Watermelon Slicing Engine
@@ -265,6 +273,7 @@ function buildKnife() {
 }
 
 function onWindowResize() {
+    if (!canvasContainer || !renderer || !camera) return;
     camera.aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
@@ -446,7 +455,7 @@ function animate() {
         } else if (animationPhase === 'separating') {
             cutProgress += 0.04;
             
-            const targetSeparation = R * 0.55; 
+            const targetSeparation = R * 0.6; 
             const currentSeparation = THREE.MathUtils.lerp(0, targetSeparation, Math.min(cutProgress, 1.0));
 
             leftHalfGroup.position.copy(normalVec.clone().multiplyScalar(currentSeparation));
@@ -457,24 +466,6 @@ function animate() {
             updateDynamicClippingPlanes();
 
             if (cutProgress >= 1.0) {
-                let safetyLoop = 0;
-                let offsetPush = 0;
-                while (safetyLoop < 50) {
-                    const boxA = new THREE.Box3().setFromObject(leftHalfGroup);
-                    const boxB = new THREE.Box3().setFromObject(rightHalfGroup);
-                    if (!boxA.intersectsBox(boxB)) {
-                        break;
-                    }
-                    offsetPush += 0.05;
-                    const separationWithExtra = targetSeparation + offsetPush;
-                    leftHalfGroup.position.copy(normalVec.clone().multiplyScalar(separationWithExtra));
-                    rightHalfGroup.position.copy(normalVec.clone().multiplyScalar(-separationWithExtra));
-                    leftHalfGroup.updateMatrixWorld(true);
-                    rightHalfGroup.updateMatrixWorld(true);
-                    updateDynamicClippingPlanes();
-                    safetyLoop++;
-                }
-
                 startLeftPos.copy(leftHalfGroup.position);
                 startRightPos.copy(rightHalfGroup.position);
                 startLeftRot.copy(leftHalfGroup.quaternion);
