@@ -1,7 +1,3 @@
-/*
-Audio Synthesis & UI Helper Utilities
-*/
-
 export let audioCtx = null;
 export let ambientSource = null;
 
@@ -11,7 +7,6 @@ export function initAudio() {
     }
 }
 
-// Procedural cutting sound effect
 export function playCutSound(soundEnabled) {
     if (!soundEnabled) return;
     initAudio();
@@ -35,14 +30,13 @@ export function playCutSound(soundEnabled) {
     osc.stop(audioCtx.currentTime + 0.4);
 }
 
-// Procedural chime sound for results
 export function playChimeSound(soundEnabled, success = true) {
     if (!soundEnabled) return;
     initAudio();
     const now = audioCtx.currentTime;
 
     if (success) {
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        const notes = [523.25, 659.25, 783.99, 1046.50];
         notes.forEach((freq, idx) => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -74,7 +68,6 @@ export function playChimeSound(soundEnabled, success = true) {
     }
 }
 
-// Ambient theme chord loop
 export function startAmbientMusic(musicEnabled) {
     initAudio();
     if (ambientSource) return;
@@ -85,9 +78,9 @@ export function startAmbientMusic(musicEnabled) {
     const filter = audioCtx.createBiquadFilter();
 
     osc1.type = 'sine';
-    osc1.frequency.value = 130.81; // C3
+    osc1.frequency.value = 130.81;
     osc2.type = 'triangle';
-    osc2.frequency.value = 164.81; // E3
+    osc2.frequency.value = 164.81;
 
     filter.type = 'lowpass';
     filter.frequency.value = 320;
@@ -105,7 +98,6 @@ export function startAmbientMusic(musicEnabled) {
     ambientSource = { osc1, osc2, gainNode };
 }
 
-// Confetti Particle Effect Generator
 let confettiParticles = [];
 let confettiActive = false;
 let confettiCanvas = null;
@@ -144,7 +136,7 @@ function loopConfetti() {
     confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
 
     let activeCount = 0;
-    confettiParticles.forEach(p => {
+    confettiParticles.forEach(function(p) {
         p.y += p.speedY;
         p.x += p.speedX;
         p.rotation += p.rotationSpeed;
@@ -167,7 +159,6 @@ function loopConfetti() {
     }
 }
 
-// Modal Toggle Helper
 export function toggleModal(id, show) {
     const modal = document.getElementById(id);
     if (!modal) return;
