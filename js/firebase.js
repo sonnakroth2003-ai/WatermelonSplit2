@@ -16,5 +16,4 @@ try {
     console.error("Firebase Initialization Error:", error);
 }
 
-// ⚠️ DÒNG QUAN TRỌNG NHẤT BỊ THIẾU:
 export { db };
